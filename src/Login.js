@@ -2,10 +2,12 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
+import {Link } from "react-router-dom";
+
 
 async function loginUser(credentials) {
     console.log(JSON.stringify(credentials))
-    return fetch('http://localhost:8080/api/login', {
+    return fetch('http://localhost:8090/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,6 +30,7 @@ export default function Login({setToken}) {
       password
     });
     console.log(token)
+    
     setToken(token);
   }
 
@@ -43,10 +46,16 @@ export default function Login({setToken}) {
             <p>Password</p>
             <input type="password" onChange={e => setPassword(e.target.value)} />
           </label>
+          
+          
           <div>
-            <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
           </div>
+          
+            
+          
         </form>
       </div>
+      
     )
 }

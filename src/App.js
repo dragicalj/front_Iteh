@@ -3,6 +3,9 @@ import './App.css';
 import React from 'react';
 import Login from './Login';
 import { useState } from 'react';
+import Home from './Home';
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+
 
 function App() {
   
@@ -11,11 +14,17 @@ function App() {
   if(!token) {
     return <Login setToken={setToken} />
   }
-  
-  return (
-    <div>
-      
-    </div>
+  return (<>
+    <BrowserRouter>
+      <Routes>
+      <Route path='/' element={<Home />}></Route>
+       
+       <Route path='/home' element={<Home />}></Route>
+       
+      </Routes>
+    
+    </BrowserRouter>
+    </>
   );
   
 }
