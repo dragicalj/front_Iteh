@@ -1,18 +1,16 @@
 import React from 'react'
 import {Link } from "react-router-dom";
 import Login from './Login';
+import Post from './Post';
 
 
-function Home() {
-  if(!token){
-    return<Login setToken={setToken}/>
-  }
-  if(token){
-    return <Home/>
-  }
+function Home({token}) {
+  
   return (
       <>
-    <div>Home</div></>
+    <div>
+      <Post token={token}/>
+      </div></>
   )
 }
 

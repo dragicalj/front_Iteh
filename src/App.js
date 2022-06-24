@@ -14,6 +14,9 @@ function App() {
   if(!token) {
     return <Login setToken={setToken} />
   }
+  if(token){
+    return <Home token={token}/>
+  }
   return (<>
     <BrowserRouter>
       <Routes>
