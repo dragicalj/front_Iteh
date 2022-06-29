@@ -3,6 +3,8 @@ import './App.css';
 import React from 'react';
 import { useState } from 'react';
 import {Link } from "react-router-dom";
+import { useNavigate } from 'react-router';
+
 
 
 async function loginUser(credentials) {
@@ -22,6 +24,7 @@ async function loginUser(credentials) {
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  let navigate = useNavigate();
    
   const handleSubmit = async e => {
     e.preventDefault();
@@ -32,9 +35,11 @@ export default function Login({setToken}) {
     localStorage.setItem("token", JSON.stringify(token.access_token));
     setToken(token.access_token);
     console.log(token.access_token);
+    navigate("../home", { replace: true });
   }
-
+  
   return(
+    
       <div className="login-wrapper">
         <h1>Please Log In</h1>
         <form onSubmit={handleSubmit}>
