@@ -24,10 +24,13 @@ function Home() {
   
   
   return (
-      <>
+    <>
     <div>
-      <Post post={JSON.parse(localStorage.getItem("posts"))[0]}/>
-      </div></>
+     {JSON.parse(localStorage.getItem("posts")).map((post) => (
+        <Post post={post}/>
+      ))}
+    </div>
+    </>
   )
 }
 
