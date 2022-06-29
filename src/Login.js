@@ -29,8 +29,9 @@ export default function Login({setToken}) {
       username,
       password
     });
-    localStorage.setItem("token", JSON.stringify(token));
-    setToken(token);
+    localStorage.setItem("token", JSON.stringify(token.access_token));
+    setToken(token.access_token);
+    console.log(token.access_token);
   }
 
   return(
@@ -45,16 +46,10 @@ export default function Login({setToken}) {
             <p>Password</p>
             <input type="password" onChange={e => setPassword(e.target.value)} />
           </label>
-          
-          
           <div>
           <button type="submit">Submit</button>
           </div>
-          
-            
-          
         </form>
       </div>
-      
     )
 }
