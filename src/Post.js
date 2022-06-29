@@ -1,42 +1,50 @@
 import React from 'react'
+import './Post.css';
 
 
-function Post({token}) {
+
+function Post(post) {
 
   React.useEffect(() => {
-    handleSubmit();
+    console.log(post)
   }, []);
 
-  const handleSubmit = async e => {
- //   e.preventDefault();
-    const posts = await getPost({});
-    localStorage.setItem("posts", JSON.stringify(posts));
-    console.log(posts);
-  };
-
-
   return (
-    <div className='post'>
-        <h3>username</h3>
-        <p>description</p>
-        {console.log(`Bearer ${token}`)}
-    </div>
+    <div class="container">
+    <div class="col-md-12 col-lg-12">
+        <article class="post vt-post">
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+                    <div class="post-type post-img">
+                        <a href="#"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="img-responsive" alt="image post"></img></a>
+                    </div>
+                    <div class="author-info author-info-2">
+                        <ul class="list-inline">
+                            <li>
+                                <div class="info">
+                                    <p>Posted on:</p>
+                                    <strong>Mar 21, 2015</strong></div>
+                            </li>
+                            <li>
+                                <div class="info">
+                                    <p>Comments:</p>
+                                    <strong>127</strong></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
+                    <div class="caption">
+                        <h3 class="md-heading"><a href="#">{post.post.title}</a></h3>
+                        <p> {post.post.description} </p>
+                        <a class="btn btn-default" href="#" role="button">Read More</a> </div>
+                </div>
+            </div>
+        </article>
+        </div>
+        </div>
   )
 }
 
-async function getPost() {
-
-  //console.log(JSON.stringify(credentials))
-  return fetch('http://localhost:8090/api/posts', {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods':'POST,GET,PATCH,OPTIONS'
-    },
-  })
-    .then(data => data.json())
-       
- }
 
 export default Post
