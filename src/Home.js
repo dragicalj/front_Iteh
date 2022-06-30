@@ -3,6 +3,7 @@ import {Link } from "react-router-dom";
 import Login from './Login';
 import Post from './Post';
 import { useState } from 'react';
+import PostForm from './PostForm';
 
 
 function Home() {
@@ -17,7 +18,7 @@ function Home() {
   const callGetPosts = async e => {
     const posts = await getPosts({});
     localStorage.setItem("posts", JSON.stringify(posts));
-    //console.log(posts[0])
+    console.log(posts)
   };
 
 
@@ -25,7 +26,10 @@ function Home() {
   
   return (
     <>
-    <div>
+    <div style={{marginTop : "20px"}}>
+      <div style={{marginBottom : "50px"}} className = "container">
+        <PostForm/>
+      </div>
      {JSON.parse(localStorage.getItem("posts")).map((post) => (
         <Post post={post}/>
       ))}

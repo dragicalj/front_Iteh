@@ -10,7 +10,7 @@ function Post(post) {
   }, []);
 
   return (
-    <div class="container">
+    <div style={{width : "1000px"}} class="container">
     <div class="col-md-12 col-lg-12">
         <article class="post vt-post">
             <div class="row">
@@ -26,7 +26,7 @@ function Post(post) {
                                     <strong>Mar 21, 2015</strong></div>
                             </li>
                             <li>
-                                <div class="info">
+                                <div style={{marginLeft : "50px"}} class="info">
                                     <p>Comments:</p>
                                     <strong>127</strong></div>
                             </li>
