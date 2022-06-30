@@ -6,16 +6,31 @@ function PostForm() {
         
       }, []);
 
+      const [title, setTitle] = useState();
+      const [description, setDescription] = useState();
+
+
+      const handleSubmit = async e => {
+        //e.preventDefault();
+        await savePost({
+          username,
+          password
+        });
+        localStorage.setItem("token", JSON.stringify(token.access_token));
+        setToken(token.access_token);
+        console.log(token.access_token);
+      }
+
       return (
         <div style={{width : "1000px", textAlign : "center"}} class = "container">
-          <form>
+          <form onSubmit={handlePost}>
           <div style={{textAlign : "left"}} class="form-group">
             <label style={{fontSize : "25px"}} for="exampleFormControlInput1">Title</label>
-            <input type="text" class="form-control" id="titleInput" placeholder="Title"/>
+            <input type="text" class="form-control" id="titleInput" placeholder="Title" value={this.title}/>
           </div>
           <div style={{textAlign : "left"}} class="form-group">
             <label style={{fontSize : "20px"}} for="exampleFormControlTextarea1">What's on your mind?</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Say something..."></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Say something..." value={this.description}></textarea>
           </div>
           </form>
           <form>
@@ -27,8 +42,19 @@ function PostForm() {
         </form>
         </div>
       )
-
-
 }
+
+async function savePost(credentials) {
+  console.log(JSON.stringify(credentials))
+  return fetch('http://localhost:8090/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: "username="+credentials.username+"&"+"password="+credentials.password  //"username=john&password=1234"
+  })
+    .then(data => data.json())
+
+ }
 
 export default PostForm
