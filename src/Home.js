@@ -14,6 +14,7 @@ function Home() {
 
   React.useEffect(() => {
       callGetPosts();
+      callGetUserData();
   }, []);
 
 
@@ -24,6 +25,12 @@ function Home() {
     setIsLoaded(true);
     console.log(posts)
   };
+
+  const callGetUserData = async e => {
+    var username = JSON.parse(localStorage.getItem("username"))
+    const userData = await getUserData(username);
+    console.log(userData);
+  }
 
 
   
@@ -63,5 +70,19 @@ async function getPosts() {
     .then(data => data.json())
        
  }
+
+async function getUserData(username) {
+  return fetch('http://localhost:8090/api/user/'+username, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods':'POST,GET,PATCH,OPTIONS'
+    },
+  })
+    .then(data => data.json())
+}
+
+
 
 export default Home;

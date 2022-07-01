@@ -37,6 +37,11 @@ export default function Login({setToken}) {
     console.log(token.access_token);
     navigate("../home", { replace: true });
   }
+
+  function setUsername1(username){
+    localStorage.setItem("username", JSON.stringify(username));
+    console.log(username);
+  }
   
   return(
     
@@ -53,7 +58,7 @@ export default function Login({setToken}) {
             <input style={{marginLeft : "10px", fontSize : "20px"}} type="password" onChange={e => setPassword(e.target.value)} />
           </label>
           <div>
-          <button style={{marginTop : "20px", width : "300px" }} type="submit" class="btn btn-primary mb-2">LOG IN</button>
+          <button style={{marginTop : "20px", width : "300px" }} type="submit" class="btn btn-primary mb-2" onClick={setUsername1(username)}>LOG IN</button>
           </div>
         </form>
       </div>
