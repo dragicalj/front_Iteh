@@ -12,6 +12,7 @@ function Home() {
 
   
   const[isLoaded, setIsLoaded]=useState(false);
+  const[isLoaded2, setIsLoaded2]=useState(false);
 
   React.useEffect(() => {
       callGetPosts();
@@ -30,11 +31,12 @@ function Home() {
     var username = JSON.parse(localStorage.getItem("username"))
     const userData = await getUserData(username);
     localStorage.setItem("userData", JSON.stringify(userData));
+    setIsLoaded2(true);
   }
 
 
   
-  if(isLoaded) {
+  if(isLoaded && isLoaded2) {
   return (
 
     <div class="container" style={{textAlign: "left"}}>
