@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import Login from './Login';
+import Login from './components/Login';
 import { useState } from 'react';
-import Home from './Home';
+import Home from './components/Home';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 

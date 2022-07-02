@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../App.css';
 import React from 'react';
 import { useState } from 'react';
 import {Link } from "react-router-dom";
@@ -58,7 +58,7 @@ export default function Login({setToken}) {
             <input style={{marginLeft : "10px", fontSize : "20px"}} type="password" onChange={e => setPassword(e.target.value)} />
           </label>
           <div>
-          <button style={{marginTop : "20px", width : "300px" }} type="submit" class="btn btn-primary mb-2" onClick={setUsername1(username)}>LOG IN</button>
+          <button style={{marginTop : "20px", width : "300px" }} type="submit" className="btn btn-primary mb-2" onClick={setUsername1(username)}>LOG IN</button>
           </div>
         </form>
       </div>

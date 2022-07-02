@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link } from "react-router-dom";
 import Login from './Login';
-import Post from './Post';
+import Post from './Post/Post';
 import { useState } from 'react';
 
 import PostForm from './PostForm';
