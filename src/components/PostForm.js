@@ -25,7 +25,7 @@ function PostForm() {
           <div style={{textAlign : "left", marginTop: "10px"}} className="form-group">
             <label style={{marginRight : "10px"}} for="exampleFormControlFile1">Upload picture: </label>
             <input type="file" className="form-control-file" id="FormControlFile"/>
-            <button style={{width : "250px", marginLeft : "19em"}} type="submit" className="btn btn-primary mb-2">POST</button>
+            <button style={{width : "250px", marginLeft : "17em"}} type="submit" className="btn btn-primary mb-2">POST</button>
           </div>
         </form>
         </div>
