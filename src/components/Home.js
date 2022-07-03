@@ -5,6 +5,7 @@ import Post from './Post/Post';
 import { useState } from 'react';
 import GroupList from './GroupList';
 import PostForm from './PostForm';
+import NavBar from './NavBar';
 
 
 
@@ -30,6 +31,7 @@ function Home() {
   const callGetUserData = async e => {
     var username = JSON.parse(localStorage.getItem("username"))
     const userData = await getUserData(username);
+    console.log(userData)
     localStorage.setItem("userData", JSON.stringify(userData));
     setIsLoaded2(true);
   }
@@ -39,9 +41,11 @@ function Home() {
   if(isLoaded && isLoaded2) {
   return (
 
-    <div class="container" style={{textAlign: "left"}}>
+    <div style={{textAlign: "left", width:"100%"}}>
+      <NavBar></NavBar>
       <div class="row">
-        <div class="col" style={{marginTop:"380px", width : "200px"}}>
+        <div class="col" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
+        <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
           <GroupList>
           </GroupList>
         </div>
@@ -52,7 +56,6 @@ function Home() {
         ))}
         </div>
         <div class="col">
-      
         </div>
       </div>
     </div>
