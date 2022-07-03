@@ -10,7 +10,7 @@ function Post(post) {
   }, []);
 
   return (
-    <div style={{width : "1000px"}} className="container">
+    <div style={{width : "1000px", marginTop: "50px"}} className="container">
     <div className="col-md-12 col-lg-12">
         <article className="post vt-post">
             <div className="row">

@@ -11,7 +11,7 @@ function GroupList() {
 
 
     return (
-        <div style={{width : "300px", backgroundColor : "white"}}>
+        <div style={{width : "300px", backgroundColor : "white", marginLeft:"10px" }}>
             { JSON.parse(localStorage.getItem("userData")).groups.map((group) => (
             <div class="row">
               <div class="col-4">
