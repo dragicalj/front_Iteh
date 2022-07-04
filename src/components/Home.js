@@ -32,7 +32,6 @@ function Home() {
   const callGetUserData = async e => {
     var username = JSON.parse(localStorage.getItem("username"))
     const userData = await getUserData(username);
-    console.log(userData)
     localStorage.setItem("userData", JSON.stringify(userData));
     setIsLoaded2(true);
   }
@@ -40,12 +39,11 @@ function Home() {
 
   const callCreateGroup = async e => {
     e.preventDefault();
-    console.log("OVDE JE GROUP NAME")
-    console.log(groupName);
     const groupInformations = await createGroup(groupName);
     localStorage.setItem("groupInformations", JSON.stringify(groupInformations));
-    console.log("USPESNO KREIRANA GRUPA")
-    console.log(groupInformations)
+    const joinResponse = await joinGroup(JSON.parse(localStorage.getItem("username")), groupName);
+    alert("Successfully created group");
+    window.location.reload(true);
   }
 
 
@@ -149,6 +147,19 @@ async function createGroup(groupname) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( {name : groupname})
+    })
+      .then(data => data.json())
+}
+
+async function joinGroup(username, groupname) {
+  return fetch('http://localhost:8090/api/group/add', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( {username : username , groupName : groupname})
     })
       .then(data => data.json())
 }
