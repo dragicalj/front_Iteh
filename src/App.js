@@ -4,6 +4,7 @@ import React from 'react';
 import Login from './components/Login';
 import { useState } from 'react';
 import Home from './components/Home';
+import Group from './components/Group';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 
@@ -19,7 +20,8 @@ function App() {
   return (
     <Routes>
         <Route path='/login' element={<Login/>}></Route>
-        <Route path='/home' element={<Home/>}></Route> 
+        <Route path='/home' element={<Home/>}></Route>
+        <Route path='/group' element={<Group/>}></Route> 
       </Routes>
   )
 

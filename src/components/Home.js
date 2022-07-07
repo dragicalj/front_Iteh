@@ -1,12 +1,9 @@
 import React from 'react'
-import {Link } from "react-router-dom";
-import Login from './Login';
 import Post from './Post/Post';
 import { useState } from 'react';
 import GroupList from './GroupList';
 import PostForm from './PostForm';
 import NavBar from './NavBar';
-import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 
 function Home() {
@@ -15,6 +12,8 @@ function Home() {
   const[isLoaded, setIsLoaded]=useState(false);
   const[isLoaded2, setIsLoaded2]=useState(false);
   const[groupName, setGroupName] = useState("");
+  const[deleteGroupName, setDeleteGroupName] = useState("");
+  const[joinGroupName, setJoinGruopName] = useState("");
 
   React.useEffect(() => {
       callGetPosts();
@@ -41,9 +40,20 @@ function Home() {
     e.preventDefault();
     const groupInformations = await createGroup(groupName);
     localStorage.setItem("groupInformations", JSON.stringify(groupInformations));
+    alert("Group '" + groupName + "'created!");
     const joinResponse = await joinGroup(JSON.parse(localStorage.getItem("username")), groupName);
-    alert("Successfully created group");
-    window.location.reload(true);
+  }
+
+  const callDeleteGroup = async e => {
+    e.preventDefault(); 
+    await deleteGroup(deleteGroupName, JSON.parse(localStorage.getItem("username")));
+    alert("Group '" + deleteGroupName + "' deleted!");
+  }
+
+  const callJoinGroup = async e => {
+    e.preventDefault();
+    await joinGroup(JSON.parse(localStorage.getItem("username")), joinGroupName);
+    alert("successfully joined in '" + joinGroupName + "' group");
   }
 
 
@@ -78,18 +88,32 @@ function Home() {
           <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label style={{fontWeight : "bold"}}>Join group</Form.Label>
-          <Form.Control type="text" placeholder="Enter group name" />
+          <Form.Control type="text" placeholder="Enter group name" onChange={e => setJoinGruopName(e.target.value)}/>
           <Form.Text className="text-muted">
              Join to group and share posts with your friends.
           </Form.Text>
           </Form.Group>
-          <button className="btn btn-primary" style={{width : "300px"}} type="submit">
+          <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callJoinGroup}>
             Join group
           </button>
           </Form>
           </div>
-          
 
+          <div style={{marginTop: "40px", marginLeft:"10px", width: "300px" }}>
+          <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label style={{fontWeight : "bold"}}>Delete group</Form.Label>
+          <Form.Control type="text" placeholder="Enter group name" onChange={e => setDeleteGroupName(e.target.value)}/>
+          <Form.Text className="text-muted">
+             Delete group if you think that there is anymore to talk about.
+          </Form.Text>
+          </Form.Group>
+          <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callDeleteGroup}>
+            Delete group
+          </button>
+          </Form>
+          </div>
+          
         </div>
         <div class="col-8" style={{marginTop:"50px"}}>
           <PostForm/>
@@ -161,7 +185,27 @@ async function joinGroup(username, groupname) {
       },
       body: JSON.stringify( {username : username , groupName : groupname})
     })
-      .then(data => data.json())
+    .then(function(response) {
+      if(response.ok) {
+        console.log("Uspesno joinovan!")
+      }
+    })
+}
+
+async function deleteGroup(groupname, username) {
+  return fetch('http://localhost:8090/api/group/'+ groupname + '/'+ username, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods':'POST,GET,DELETE,PATCH,OPTIONS'
+    },
+  })
+    .then(function(response) {
+      if(response.ok) {
+        console.log("Uspesno obrisano!")
+      }
+    })
 }
 
 

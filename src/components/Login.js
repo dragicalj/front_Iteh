@@ -7,19 +7,6 @@ import { useNavigate } from 'react-router';
 
 
 
-async function loginUser(credentials) {
-    console.log(JSON.stringify(credentials))
-    return fetch('http://localhost:8090/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: "username="+credentials.username+"&"+"password="+credentials.password  //"username=john&password=1234"
-    })
-      .then(data => data.json())
-
-   }
-
 
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
@@ -66,3 +53,16 @@ export default function Login({setToken}) {
 
     )
 }
+
+async function loginUser(credentials) {
+  console.log(JSON.stringify(credentials))
+  return fetch('http://localhost:8090/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: "username="+credentials.username+"&"+"password="+credentials.password  //"username=john&password=1234"
+  })
+    .then(data => data.json())
+
+ }
