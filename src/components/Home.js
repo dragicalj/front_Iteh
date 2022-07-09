@@ -14,6 +14,8 @@ function Home() {
   const[groupName, setGroupName] = useState("");
   const[deleteGroupName, setDeleteGroupName] = useState("");
   const[joinGroupName, setJoinGruopName] = useState("");
+  var isJoined = false;
+  var isDeleted = false;
 
   React.useEffect(() => {
       callGetPosts();
@@ -47,14 +49,27 @@ function Home() {
   const callDeleteGroup = async e => {
     e.preventDefault(); 
     await deleteGroup(deleteGroupName, JSON.parse(localStorage.getItem("username")));
-    alert("Group '" + deleteGroupName + "' deleted!");
+    if(isDeleted) {
+      alert("Group '" + deleteGroupName + "' deleted!");
+    } else {
+      alert("Group : '" + deleteGroupName + "' doesn't exist");
+    }
+    
   }
 
   const callJoinGroup = async e => {
     e.preventDefault();
     await joinGroup(JSON.parse(localStorage.getItem("username")), joinGroupName);
-    alert("successfully joined in '" + joinGroupName + "' group");
+    if(isJoined) {
+      alert("successfully joined in '" + joinGroupName + "' group");
+    } else {
+      alert("Group : '" + joinGroupName + "' doesn't exist");
+    }
+
+    
   }
+
+
 
 
   
@@ -133,6 +148,47 @@ function Home() {
       </div>
     )
   }
+
+
+  async function joinGroup(username, groupname) {
+    return fetch('http://localhost:8090/api/group/add', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {username : username , groupname : groupname})
+      })
+      .then(function(response) {
+        if(response.ok) {
+          console.log("Uspesno joinovan!")
+          isJoined = true;
+        }
+        else {
+          isJoined = false;
+        }
+      })
+  }
+
+  async function deleteGroup(groupname, username) {
+    return fetch('http://localhost:8090/api/group/'+ groupname + '/'+ username, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods':'POST,GET,DELETE,PATCH,OPTIONS'
+      },
+    })
+      .then(function(response) {
+        if(response.ok) {
+          isDeleted = true;
+        } else {
+          isDeleted = false;
+        }
+      })
+  }
+
 }
 
 async function getPosts() {
@@ -175,38 +231,8 @@ async function createGroup(groupname) {
       .then(data => data.json())
 }
 
-async function joinGroup(username, groupname) {
-  return fetch('http://localhost:8090/api/group/add', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify( {username : username , groupname : groupname})
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log("Uspesno joinovan!")
-      }
-    })
-}
 
-async function deleteGroup(groupname, username) {
-  return fetch('http://localhost:8090/api/group/'+ groupname + '/'+ username, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods':'POST,GET,DELETE,PATCH,OPTIONS'
-    },
-  })
-    .then(function(response) {
-      if(response.ok) {
-        console.log("Uspesno obrisano!")
-      }
-    })
-}
+
 
 
 
