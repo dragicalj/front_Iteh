@@ -6,6 +6,7 @@ import './Post.css';
 function Post(post) {
 
   React.useEffect(() => {
+    console.log("OVDE SU INFO O POST")
     console.log(post)
   }, []);
 

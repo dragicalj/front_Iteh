@@ -26,7 +26,7 @@ function Home() {
 
 
   const callGetPosts = async e => {
-    const posts = await getPosts({});
+    const posts = await getPosts(JSON.parse(localStorage.getItem("username")));
     localStorage.setItem("posts", JSON.stringify(posts));
     setIsLoaded(true);
     console.log("OVDE SU POSTOVI")
@@ -195,19 +195,18 @@ function Home() {
 
 }
 
-async function getPosts() {
-  console.log("lalalla")
-  //console.log(JSON.stringify(credentials))
+async function getPosts(username) {
   return fetch('http://localhost:8090/api/posts', {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods':'POST,GET,PATCH,OPTIONS'
+      'Access-Control-Allow-Methods':'POST,GET,PATCH,OPTIONS',
+      'Content-Type': 'application/json'
     },
+    body: JSON.stringify( {username : username})
   })
-    .then(data => data.json())
-       
+    .then(data => data.json())   
  }
 
 async function getUserData(username) {
