@@ -16,6 +16,7 @@ function Home() {
   const[joinGroupName, setJoinGruopName] = useState("");
   var isJoined = false;
   var isDeleted = false;
+  var groups;
 
   React.useEffect(() => {
       callGetPosts();
@@ -28,12 +29,17 @@ function Home() {
     const posts = await getPosts({});
     localStorage.setItem("posts", JSON.stringify(posts));
     setIsLoaded(true);
+    console.log("OVDE SU POSTOVI")
+    console.log(posts)
   };
 
   const callGetUserData = async e => {
     var username = JSON.parse(localStorage.getItem("username"))
     const userData = await getUserData(username);
     localStorage.setItem("userData", JSON.stringify(userData));
+    console.log("OVDE SU USER DATA")
+    console.log(userData)
+    groups = userData.groups;
     setIsLoaded2(true);
   }
 
@@ -65,8 +71,6 @@ function Home() {
     } else {
       alert("Group : '" + joinGroupName + "' doesn't exist");
     }
-
-    
   }
 
 
@@ -131,7 +135,7 @@ function Home() {
           
         </div>
         <div class="col-8" style={{marginTop:"50px"}}>
-          <PostForm/>
+          <PostForm groups={JSON.parse(localStorage.getItem("userData")).groups}/>
           {JSON.parse(localStorage.getItem("posts")).map((post) => (
           <Post post={post}/>
         ))}
