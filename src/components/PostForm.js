@@ -31,7 +31,7 @@ function PostForm(groups) {
       console.log(group);
       console.log(title);
       console.log(desc);
-      //await savePost();
+      await savePost(JSON.parse(localStorage.getItem("username")), group, title, desc);
 
       }
       
@@ -67,6 +67,25 @@ function PostForm(groups) {
         </form>
         </div>
       )
+
+      async function savePost(username, groupname, title, description) {
+        return fetch('http://localhost:8090/api/post/save', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( {post : {title : title, description : description, picturePath : ""} , username: username, groupname : groupname})
+          })
+          .then(function(response) {
+            if(response.ok) {
+              console.log("Uspesno sacuvan post!")
+            }
+          })
+      }
+
+
 }
 
 
