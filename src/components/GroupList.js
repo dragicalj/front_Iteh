@@ -15,7 +15,7 @@ function GroupList() {
 
     function navigateToGroup(groupName) {
      // localStorage.setItem("groupName", JSON.stringify(groupName));
-      navigate("../group", { replace: true });
+     // navigate("../group", { replace: true });
     }
 
 
