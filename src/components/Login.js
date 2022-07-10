@@ -20,7 +20,7 @@ export default function Login({setToken}) {
       password
     });
     localStorage.setItem("token", JSON.stringify(token.access_token));
-    setToken(token.access_token);
+    //setToken(token.access_token);
     console.log(token.access_token);
     navigate("../home", { replace: true });
   }
