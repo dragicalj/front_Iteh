@@ -24,13 +24,13 @@ function Post(post) {
                             <li>
                                 <div className="info">
                                     <p>Posted on:</p>
-                                    <strong>Mar 21, 2015</strong></div>
+                                    <strong>{post.post.groupName}</strong></div>
                             </li>
-                            <li>
+                            {/* <li>
                                 <div style={{marginLeft : "50px"}} className="info">
                                     <p>Comments:</p>
                                     <strong>127</strong></div>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>
