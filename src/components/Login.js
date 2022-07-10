@@ -19,9 +19,14 @@ export default function Login({setToken}) {
       username,
       password
     });
+    const roles = await getRoles({
+      username
+    })
     localStorage.setItem("token", JSON.stringify(token.access_token));
     //setToken(token.access_token);
     console.log(token.access_token);
+    console.log("ROLE")
+    console.log(roles)
     navigate("../home", { replace: true });
   }
 
@@ -66,3 +71,18 @@ async function loginUser(credentials) {
     .then(data => data.json())
 
  }
+
+ async function getRoles(username1) {
+  console.log("GET ROLES")
+  console.log(username1)
+  return fetch('http://localhost:8090/api/role', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(username1)
+    })
+    .then( data => data.json());
+}
