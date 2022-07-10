@@ -7,6 +7,7 @@ function PostForm(groups) {
     const [group, setGroup] = React.useState();
     const [title, setTitle] = React.useState();
     const [desc, setDesc] = React.useState();
+    var isPosted = false;
 
     React.useEffect(() => {
       console.log('GRUPE')
@@ -32,7 +33,11 @@ function PostForm(groups) {
       console.log(title);
       console.log(desc);
       await savePost(JSON.parse(localStorage.getItem("username")), group, title, desc);
-
+      if(isPosted) {
+        alert("Successfully saved post with '" + title + "' title.")
+      } else {
+        alert("Post with '" + title + "' title doesn't saved.")
+      }
       }
       
     
@@ -81,6 +86,9 @@ function PostForm(groups) {
           .then(function(response) {
             if(response.ok) {
               console.log("Uspesno sacuvan post!")
+              isPosted = true;
+            } else {
+              isPosted = false;
             }
           })
       }
