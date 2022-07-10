@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function PostForm(groups) {
 
-    const [group, setGroup] = React.useState();
+    const [group, setGroup] = React.useState(null);
     const [title, setTitle] = React.useState();
     const [desc, setDesc] = React.useState();
     var isPosted = false;
@@ -32,6 +32,10 @@ function PostForm(groups) {
       console.log(group);
       console.log(title);
       console.log(desc);
+      if(group ==  null) {
+        alert("Choose group where you want to post!!!");
+        return;
+      }
       await savePost(JSON.parse(localStorage.getItem("username")), group, title, desc);
       if(isPosted) {
         alert("Successfully saved post with '" + title + "' title.")
