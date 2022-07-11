@@ -1,21 +1,74 @@
 
 import React from "react";
+import Post from './Post/Post';
+import { useState } from 'react';
+import GroupList from './GroupList';
+import PostForm from './PostForm';
+import NavBar from './NavBar';
+import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
   
 // Second simple component with heading tag
-export default function admin() {
+function Admin() {
+  const[groupName, setGroupName] = useState("");
+  
+  React.useEffect(() => {
+    callGetGroups()
+}, []);
+
+
+
+  const callGetGroups = async e => {
+    var groups = await getGroups();
+    localStorage.setItem("groups", JSON.stringify(groups));
+    console.log("OVO SU GRUPE ADMIN")
+    console.log(groups)
+  }
+
   return (
-    <div>
-      <h1
-        style={{ // Applying some styles to the heading
-          display: "flex",
-          justifyContent: "center",
-          padding: "15px",
-          border: "13px solid #6A0DAD",
-          color: "#7F00FF",
-        }}
-      >
-        ????Geeks For Geeks Second Component in New Tab
-      </h1>
+    
+    <div style={{textAlign: "left", width:"100%"}}>
+      <NavBar></NavBar>
+      <div class="row">
+        <div class="col" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
+          <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
+         
+
+          <div style={{marginTop: "40px", marginLeft:"10px", width: "300px" }}>
+          <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label style={{fontWeight : "bold"}}>Change group name</Form.Label>
+          <Form.Control type="text" placeholder="Enter group name" onChange={e => setGroupName(e.target.value)}/>
+          <Form.Text className="text-muted">
+          </Form.Text>
+          </Form.Group>
+          <button className="btn btn-primary" style={{width : "300px"}} type="submit" >
+            Change name
+          </button>
+          </Form>
+          </div>
+          <GroupList>
+          </GroupList>
+          <div></div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
     </div>
   );
 }
+
+
+
+async function getGroups() {
+  return fetch('http://localhost:8090/api/admin/groups', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods':'POST,GET,PATCH,OPTIONS'
+    },
+  })
+    .then(data => data.json())
+}
+
+export default Admin;

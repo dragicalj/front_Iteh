@@ -12,6 +12,7 @@ export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   let navigate = useNavigate();
+  let isAdmin = false;
    
   const handleSubmit = async e => {
     e.preventDefault();
@@ -25,9 +26,19 @@ export default function Login({setToken}) {
     localStorage.setItem("token", JSON.stringify(token.access_token));
     //setToken(token.access_token);
     console.log(token.access_token);
-    console.log("ROLE")
-    console.log(roles)
-    navigate("../home", { replace: true });
+    console.log("ROLE");
+    console.log(roles);
+    roles.forEach(r => {
+      if(r.name == "ROLE_ADMIN"){
+        isAdmin = true;
+      }
+    });
+    if(isAdmin){
+      navigate("../admin", { replace: true });
+    }else{
+      navigate("../home", { replace: true });
+    }
+    
   }
 
   function setUsername1(username){
