@@ -4,21 +4,28 @@ import { useState } from 'react';
 import GroupList from './GroupList';
 import PostForm from './PostForm';
 import NavBar from './NavBar';
+import Login from './Login';
 import Form from 'react-bootstrap/Form'
+import { useNavigate } from 'react-router';
 
 function Home() {
-
-  
+ 
   const[isLoaded, setIsLoaded]=useState(false);
   const[isLoaded2, setIsLoaded2]=useState(false);
   const[groupName, setGroupName] = useState("");
   const[deleteGroupName, setDeleteGroupName] = useState("");
   const[joinGroupName, setJoinGruopName] = useState("");
+  let navigate = useNavigate();
   var isJoined = false;
   var isDeleted = false;
   var groups;
 
   React.useEffect(() => {
+    
+    if(!JSON.parse(localStorage.getItem("token"))) {
+      console.log("Uslo ovde nekako")
+      navigate("../login", { replace: true });
+    }
       callGetPosts();
       callGetUserData();
   }, []);

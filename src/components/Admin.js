@@ -6,12 +6,21 @@ import GroupList from './GroupList';
 import PostForm from './PostForm';
 import NavBar from './NavBar';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { useNavigate } from 'react-router';
   
 // Second simple component with heading tag
 function Admin() {
   const[groupName, setGroupName] = useState("");
-  
+  let navigate = useNavigate();
   React.useEffect(() => {
+    if(!JSON.parse(localStorage.getItem("admin"))){
+      console.log("Uslo ovde nekako")
+      navigate("../login", { replace: true });
+    }
+    if(!JSON.parse(localStorage.getItem("token"))) {
+      console.log("Uslo ovde nekako")
+      navigate("../login", { replace: true });
+    }
     callGetGroups()
 }, []);
 
