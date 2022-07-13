@@ -7,9 +7,12 @@ import PostForm from './PostForm';
 import NavBar from './NavBar';
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from 'react-router';
+
   
+
 // Second simple component with heading tag
 function Admin() {
+  const[isLoaded, setIsLoaded]=useState(false);
   const[groupName, setGroupName] = useState("");
   let navigate = useNavigate();
   React.useEffect(() => {
@@ -29,10 +32,11 @@ function Admin() {
   const callGetGroups = async e => {
     var groups = await getGroups();
     localStorage.setItem("groups", JSON.stringify(groups));
+    setIsLoaded(true);
     console.log("OVO SU GRUPE ADMIN")
     console.log(groups)
   }
-
+if(isLoaded){
   return (
     
     <div style={{textAlign: "left", width:"100%"}}>
@@ -64,6 +68,13 @@ function Admin() {
       </div>
     </div>
   );
+}else{
+  return (
+    <div>
+      <h1> LOADING ... </h1>
+    </div>
+  )
+}
 }
 
 

@@ -11,6 +11,7 @@ export default function Login({setToken}) {
   const [password, setPassword] = useState();
   let navigate = useNavigate();
   let isAdmin = false;
+  localStorage.clear();
   
   const handleSubmit = async e => {
     e.preventDefault();

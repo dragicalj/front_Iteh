@@ -44,6 +44,7 @@ function Home() {
     var username = JSON.parse(localStorage.getItem("username"))
     const userData = await getUserData(username);
     localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("groups", JSON.stringify(userData.groups));
     console.log("OVDE SU USER DATA")
     console.log(userData)
     groups = userData.groups;

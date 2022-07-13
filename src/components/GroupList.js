@@ -21,7 +21,7 @@ function GroupList() {
 
     return (
         <div style={{width : "300px", backgroundColor : "white", marginLeft:"10px" }}>
-            { JSON.parse(localStorage.getItem("userData")).groups.map((group) => (
+            { JSON.parse(localStorage.getItem("groups")).map((group) => (
             <div class="row" onClick={navigateToGroup(group.name)}>
               <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist" style={{width:"300px", textAlign:"center", fontSize : "16px"}}>
