@@ -5,6 +5,7 @@ import { useState } from 'react';
 import GroupList from './GroupList';
 import PostForm from './PostForm';
 import NavBar from './NavBar';
+import BasicTable from './BasicTable'
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from 'react-router';
 
@@ -41,31 +42,32 @@ if(isLoaded){
     
     <div style={{textAlign: "left", width:"100%"}}>
       <NavBar></NavBar>
+      
       <div class="row">
         <div class="col" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
           <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
-         
+
 
           <div style={{marginTop: "40px", marginLeft:"10px", width: "300px" }}>
-          <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label style={{fontWeight : "bold"}}>Change group name</Form.Label>
-          <Form.Control type="text" placeholder="Enter group name" onChange={e => setGroupName(e.target.value)}/>
-          <Form.Text className="text-muted">
-          </Form.Text>
-          </Form.Group>
-          <button className="btn btn-primary" style={{width : "300px"}} type="submit" >
-            Change name
-          </button>
-          </Form>
+            <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label style={{fontWeight : "bold"}}>Change group name</Form.Label>
+            <Form.Control type="text" placeholder="Enter group name" onChange={e => setGroupName(e.target.value)}/>
+            <Form.Text className="text-muted">
+            </Form.Text>
+            </Form.Group>
+            <button className="btn btn-primary" style={{width : "300px"}} type="submit" >
+              Change name
+            </button>
+            </Form>
           </div>
-          <GroupList>
-          </GroupList>
-          <div></div>
-        </div>
-        <div class="col">
+            <GroupList>
+            </GroupList>
+         <div class="col">
+         </div>
         </div>
       </div>
+      <BasicTable></BasicTable>
     </div>
   );
 }else{
