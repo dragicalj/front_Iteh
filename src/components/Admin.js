@@ -8,6 +8,7 @@ import NavBar from './NavBar';
 import BasicTable from './BasicTable'
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from 'react-router';
+import ChartForAdmin from "./ChartForAdmin";
 
   
 
@@ -68,6 +69,7 @@ if(isLoaded){
         </div>
       </div>
       <BasicTable></BasicTable>
+      <ChartForAdmin></ChartForAdmin>
     </div>
   );
 }else{
