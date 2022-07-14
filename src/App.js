@@ -28,6 +28,7 @@ function App() {
         <Route path='/home' element={<Home/>}></Route>
         <Route path='/group' element={<Group/>}></Route>
         <Route path='/admin' element={<Admin/>}></Route> 
+        <Route path='/' element={<Login/>}></Route> 
       </Routes>
   )
 

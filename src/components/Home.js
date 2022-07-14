@@ -58,6 +58,7 @@ function Home() {
     localStorage.setItem("groupInformations", JSON.stringify(groupInformations));
     alert("Group '" + groupName + "'created!");
     const joinResponse = await joinGroup(JSON.parse(localStorage.getItem("username")), groupName);
+    window.location.reload(false);
   }
 
   const callDeleteGroup = async e => {
@@ -68,7 +69,7 @@ function Home() {
     } else {
       alert("Group : '" + deleteGroupName + "' doesn't exist");
     }
-    
+    window.location.reload(false);
   }
 
   const callJoinGroup = async e => {
@@ -79,6 +80,7 @@ function Home() {
     } else {
       alert("Group : '" + joinGroupName + "' doesn't exist");
     }
+    window.location.reload(false);
   }
 
 
