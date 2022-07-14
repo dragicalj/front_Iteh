@@ -21,7 +21,7 @@ function ChartForAdmin() {
         labels: groupNames,
         datasets: [
           {
-            label: 'Rainfall',
+            label: 'User per group',
             fill: false,
             lineTension: 0.5,
             backgroundColor: 'rgba(75,192,192,1)',

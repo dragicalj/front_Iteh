@@ -44,32 +44,32 @@ if(isLoaded){
     <div style={{textAlign: "left", width:"100%"}}>
       <NavBar></NavBar>
       
-      <div class="row">
-        <div class="col" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
-          <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
-
-
-          <div style={{marginTop: "40px", marginLeft:"10px", width: "300px" }}>
-            <Form>
+      <div class="row" >
+        <div class="col-4" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
+            <Form style={{marginLeft : "20px"}}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label style={{fontWeight : "bold"}}>Change group name</Form.Label>
             <Form.Control type="text" placeholder="Enter group name" onChange={e => setGroupName(e.target.value)}/>
             <Form.Text className="text-muted">
             </Form.Text>
             </Form.Group>
-            <button className="btn btn-primary" style={{width : "300px"}} type="submit" >
+            <button className="btn btn-primary" style={{width : "300px", marginBottom : "20px"}} type="submit" >
               Change name
             </button>
             </Form>
-          </div>
+            <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px", marginBottom : "10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
             <GroupList>
             </GroupList>
-         <div class="col">
-         </div>
+        </div>
+        <div class = "col-8" style={{marginTop:"80px", width : "1000px", marginLeft : "200px"}}>
+        <a style={{textAlign : "center", width : "600px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">GROUP TABLE</a>
+            <BasicTable></BasicTable>
         </div>
       </div>
-      <BasicTable></BasicTable>
-      <ChartForAdmin></ChartForAdmin>
+      <div class="row" style={{width : "80%", textAlign : "center" , marginLeft : "100px" , marginTop : "100px"}}>
+        <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
+        <ChartForAdmin></ChartForAdmin>
+      </div>
     </div>
   );
 }else{

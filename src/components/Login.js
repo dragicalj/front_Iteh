@@ -6,24 +6,28 @@ import {Link } from "react-router-dom";
 import { useNavigate } from 'react-router';
 
 
+
+
 export default function Login({setToken}) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   let navigate = useNavigate();
   let isAdmin = false;
-  localStorage.clear();
-  
+   
   const handleSubmit = async e => {
     e.preventDefault();
     const token = await loginUser({
       username,
       password
     });
+    
     localStorage.setItem("token", JSON.stringify(token.access_token));
+
     const roles = await getRoles({
       username
     })
-     //setToken(token.access_token);
+
+    //setToken(token.access_token);
     console.log(token.access_token);
     console.log("ROLE");
     console.log(roles);
@@ -46,7 +50,7 @@ export default function Login({setToken}) {
     localStorage.setItem("username", JSON.stringify(username));
     console.log(username);
   }
-
+  
   return(
     
       <body style={{ margin : "230px 0px", textAlign : "center"}}>
@@ -67,6 +71,7 @@ export default function Login({setToken}) {
         </form>
       </div>
       </body>
+
     )
 }
 

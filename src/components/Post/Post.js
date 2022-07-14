@@ -38,7 +38,8 @@ function Post(post) {
                     <div className="caption">
                         <h3 className="md-heading"><a href="#">{post.post.title}</a></h3>
                         <p> {post.post.description} </p>
-                        <a className="btn btn-default" href="#" role="button">Read More</a> </div>
+                        {/* <a className="btn btn-default" href="#" role="button">Read More</a>  */}
+                    </div>
                 </div>
             </div>
         </article>
