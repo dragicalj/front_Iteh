@@ -42,6 +42,7 @@ function PostForm(groups) {
       } else {
         alert("Post with '" + title + "' title doesn't saved.")
       }
+      window.location.reload(false);
       }
       
     

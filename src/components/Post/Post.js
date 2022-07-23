@@ -17,7 +17,7 @@ function Post(post) {
             <div className="row">
                 <div className="col-xs-12 col-sm-5 col-md-5 col-lg-4">
                     <div className="post-type post-img">
-                        <a href="#"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="img-responsive" alt="image post"></img></a>
+                        <a href="#"></a>
                     </div>
                     <div className="author-info author-info-2">
                         <ul className="list-inline">

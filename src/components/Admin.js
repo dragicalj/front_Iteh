@@ -16,6 +16,7 @@ import ChartForAdmin from "./ChartForAdmin";
 function Admin() {
   const[isLoaded, setIsLoaded]=useState(false);
   const[groupName, setGroupName] = useState("");
+  const[newGroupName, setNewGroupName] = useState("");
   let navigate = useNavigate();
   React.useEffect(() => {
     if(!JSON.parse(localStorage.getItem("admin"))){
@@ -38,6 +39,16 @@ function Admin() {
     console.log("OVO SU GRUPE ADMIN")
     console.log(groups)
   }
+
+  const callChaneGroupName = async e => {
+    e.preventDefault();
+
+    
+    var groups = await changeGroupName(groupName, newGroupName);
+    alert("Group '" + groupName + "'changed!");
+    window.location.reload(false);
+    
+  }
 if(isLoaded){
   return (
     
@@ -48,14 +59,16 @@ if(isLoaded){
         <div class="col-4" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
             <Form style={{marginLeft : "20px"}}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label style={{fontWeight : "bold"}}>Change group name</Form.Label>
-            <Form.Control type="text" placeholder="Enter group name" onChange={e => setGroupName(e.target.value)}/>
+            <Form.Label style={{fontWeight : "bold"}}>Enter group name</Form.Label>
+            <Form.Control type="text" placeholder="Old group name" onChange={e => setGroupName(e.target.value)}/>
+            <Form.Label style={{fontWeight : "bold"}}>Enter new group name</Form.Label>
+            <Form.Control type="text" placeholder="New group name" onChange={e => setNewGroupName(e.target.value)}/>
             <Form.Text className="text-muted">
             </Form.Text>
             </Form.Group>
-            <button className="btn btn-primary" style={{width : "300px", marginBottom : "20px"}} type="submit" >
-              Change name
-            </button>
+            <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callChaneGroupName}>
+            Chagne group name
+          </button>
             </Form>
             <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px", marginBottom : "10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
             <GroupList>
@@ -93,6 +106,19 @@ async function getGroups() {
     },
   })
     .then(data => data.json())
+}
+
+async function changeGroupName(toUpdateG, newNameG) {
+  return fetch('http://localhost:8090/api/admin/group/update', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( {toUpdate : toUpdateG, newName: newNameG})
+    })
+      .then(data => data.json())
 }
 
 export default Admin;
