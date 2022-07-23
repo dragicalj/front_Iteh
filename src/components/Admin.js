@@ -17,6 +17,9 @@ function Admin() {
   const[isLoaded, setIsLoaded]=useState(false);
   const[groupName, setGroupName] = useState("");
   const[newGroupName, setNewGroupName] = useState("");
+  const[groupNamesForChart, setGroupNamesForChart] = useState([]);
+  const[userInGroup, setUsersInGroup] = useState([]);
+
   let navigate = useNavigate();
   React.useEffect(() => {
     if(!JSON.parse(localStorage.getItem("admin"))){
@@ -28,6 +31,7 @@ function Admin() {
       navigate("../login", { replace: true });
     }
     callGetGroups()
+    //callGetGroupReport()
 }, []);
 
 
@@ -41,14 +45,23 @@ function Admin() {
   }
 
   const callChaneGroupName = async e => {
-    e.preventDefault();
-
-    
+    e.preventDefault(); 
     var groups = await changeGroupName(groupName, newGroupName);
     alert("Group '" + groupName + "'changed!");
     window.location.reload(false);
-    
   }
+
+  const callGetGroupReport = async e =>{
+    
+   
+    var report = await getGroupReport(groupName);
+    setGroupNamesForChart([...groupNamesForChart,groupName]);
+    setUsersInGroup([...userInGroup,report.userCount]);
+    console.log("Ovo je report grupe");
+    console.log(report);
+  }
+
+
 if(isLoaded){
   return (
     
@@ -81,7 +94,10 @@ if(isLoaded){
       </div>
       <div class="row" style={{width : "80%", textAlign : "center" , marginLeft : "100px" , marginTop : "100px"}}>
         <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
-        <ChartForAdmin></ChartForAdmin>
+        <Form.Label style={{fontWeight : "bold"}}>Enter group name</Form.Label>
+        <Form.Control type="text" placeholder="New group name" onChange={e => setGroupName(e.target.value)}/>
+        <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
+        <ChartForAdmin data = {{groupNamesForChart, userInGroup}}></ChartForAdmin>
       </div>
     </div>
   );
@@ -117,6 +133,19 @@ async function changeGroupName(toUpdateG, newNameG) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( {toUpdate : toUpdateG, newName: newNameG})
+    })
+      .then(data => data.json())
+}
+
+async function getGroupReport(groupname) {
+  return fetch('http://localhost:8090/api/admin/group/report', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( {name : groupname})
     })
       .then(data => data.json())
 }
