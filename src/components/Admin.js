@@ -9,6 +9,7 @@ import BasicTable from './BasicTable'
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from 'react-router';
 import ChartForAdmin from "./ChartForAdmin";
+import CreateUserForm from "./CreateUserForm";
 
   
 
@@ -98,8 +99,10 @@ if(isLoaded){
         <Form.Control type="text" placeholder="New group name" onChange={e => setGroupName(e.target.value)}/>
         <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
         <ChartForAdmin data = {{groupNamesForChart, userInGroup}}></ChartForAdmin>
+      
       </div>
     </div>
+  
   );
 }else{
   return (

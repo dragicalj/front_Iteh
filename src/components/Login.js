@@ -36,6 +36,7 @@ export default function Login({setToken}) {
         isAdmin = true;
       }
     });
+    localStorage.setItem("admin", JSON.stringify("false"));
     if(isAdmin){
       localStorage.setItem("admin", JSON.stringify("true"));
       navigate("../admin", { replace: true });

@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Group from './components/Group';
 import Admin from './components/Admin'
 import { BrowserRouter, Routes, Route} from "react-router-dom";
+import CreateUserForm from './components/CreateUserForm';
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
         <Route path='/home' element={<Home/>}></Route>
         <Route path='/group' element={<Group/>}></Route>
         <Route path='/admin' element={<Admin/>}></Route> 
-        <Route path='/' element={<Login/>}></Route> 
+        <Route path='/' element={<Login/>}></Route>
+        <Route path='/createuser' element={<CreateUserForm/>}></Route> 
       </Routes>
   )
 
