@@ -12,7 +12,7 @@ function NavBar() {
 
     const createUser =  async e =>{
         
-        navigate("../createuser", { replace: true });
+       
     }
   
     if(JSON.parse(localStorage.getItem("admin"))=="false"){

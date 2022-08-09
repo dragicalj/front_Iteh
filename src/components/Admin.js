@@ -10,6 +10,8 @@ import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootst
 import { useNavigate } from 'react-router';
 import ChartForAdmin from "./ChartForAdmin";
 import CreateUserForm from "./CreateUserForm";
+import { saveAs } from 'file-saver';
+
 
   
 
@@ -53,15 +55,30 @@ function Admin() {
   }
 
   const callGetGroupReport = async e =>{
-    
+  
    
     var report = await getGroupReport(groupName);
     setGroupNamesForChart([...groupNamesForChart,groupName]);
     setUsersInGroup([...userInGroup,report.userCount]);
     console.log("Ovo je report grupe");
     console.log(report);
+   
   }
 
+  const callDownloadGroupReport = async e =>{
+    console.log("radi");
+    var csvReport = await getCSVDataForReport(groupNamesForChart);
+    console.log(csvReport);
+    const element = document.createElement("a");
+    const file = new Blob([csvReport.data],{
+      type:"text/plain;charset-utf-8",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "data.csv";
+    document.body.appendChild(element);
+    element.click();
+   
+  }
 
 if(isLoaded){
   return (
@@ -97,7 +114,8 @@ if(isLoaded){
         <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
         <Form.Label style={{fontWeight : "bold"}}>Enter group name</Form.Label>
         <Form.Control type="text" placeholder="New group name" onChange={e => setGroupName(e.target.value)}/>
-        <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
+        <button id = "input" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
+        <button id = "input" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callDownloadGroupReport}>Download report</button>
         <ChartForAdmin data = {{groupNamesForChart, userInGroup}}></ChartForAdmin>
       
       </div>
@@ -149,6 +167,19 @@ async function getGroupReport(groupname) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( {name : groupname})
+    })
+      .then(data => data.json())
+}
+
+async function getCSVDataForReport(groupNamesForCSV) {
+  return fetch('http://localhost:8090/api/admin/report', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(groupNamesForCSV)
     })
       .then(data => data.json())
 }
