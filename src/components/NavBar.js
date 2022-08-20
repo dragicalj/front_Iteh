@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import CreateUserForm from './CreateUserForm';
 
 
 function NavBar() {
@@ -11,8 +12,9 @@ function NavBar() {
     }
 
     const createUser =  async e =>{
-        
-       
+        console.log("CreateUserFOrm");
+        navigate("../createuser", { replace: true });
+        window.location.reload()
     }
   
     if(JSON.parse(localStorage.getItem("admin"))=="false"){
