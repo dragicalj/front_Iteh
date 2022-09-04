@@ -1,6 +1,9 @@
 import React from 'react'
 import './Post.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import PostForm from '../PostForm';
+
 
 
 
@@ -8,6 +11,7 @@ function Post(post) {
 
     var isDeleted = false;
     const[deletePostID, setDeletePostID] = useState("");
+    let navigate = useNavigate();
 
   React.useEffect(() => {
     console.log("OVDE SU INFO O POST")
@@ -23,6 +27,12 @@ function Post(post) {
       alert("Post doesn't exist");
     }
     window.location.reload(false);
+  }
+  const callEditPost = async e => {
+    e.preventDefault();
+    localStorage.setItem("postToEdit", JSON.stringify(post));
+    localStorage.setItem("isEdit", JSON.stringify("true"));
+    navigate("../editpost", { replace: false});
   }
 
   async function deletePost(postId) {
@@ -70,9 +80,11 @@ function Post(post) {
                     <div className="caption">
                         <h3 className="md-heading"><a href="#">{post.post.title}</a></h3>
                         <p> {post.post.description} </p>
-                        { <a className="delete-btn" href="#" role="button" onClick={callDeletePost}>Delete post</a>  }
+                        <a className="delete-btn" href="#" role="button" onClick={callEditPost}>Edit post</a>  
+                        <div><a className="delete-btn" href="#" role="button" onClick={callDeletePost}>Delete post</a></div>
                     </div>
                 </div>
+                
             </div>
         </article>
         </div>

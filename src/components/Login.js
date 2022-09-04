@@ -31,6 +31,8 @@ export default function Login({setToken}) {
     console.log(token.access_token);
     console.log("ROLE");
     console.log(roles);
+    
+    localStorage.setItem("isEdit", JSON.stringify("false"));
     roles.forEach(r => {
       if(r.name == "ROLE_ADMIN"){
         isAdmin = true;
