@@ -14,10 +14,15 @@ function Home() {
   const[isLoaded2, setIsLoaded2]=useState(false);
   const[groupName, setGroupName] = useState("");
   const[deleteGroupName, setDeleteGroupName] = useState("");
+  const[newUserName, setNewUserName] = useState("");
+
   const[joinGroupName, setJoinGruopName] = useState("");
   let navigate = useNavigate();
   var isJoined = false;
   var isDeleted = false;
+  //const[isUpdated1, setIsUpdated1]=useState(false);
+  var isUpdated1 = false;
+
   var groups;
 
   React.useEffect(() => {
@@ -68,6 +73,17 @@ function Home() {
       alert("Group '" + deleteGroupName + "' deleted!");
     } else {
       alert("Group : '" + deleteGroupName + "' doesn't exist");
+    }
+    window.location.reload(false);
+  }
+
+  const callUpdateUser = async e => {
+    e.preventDefault(); 
+    await updateUser(JSON.parse(localStorage.getItem("username")), newUserName);
+    if(isUpdated1) {
+      alert("User name changed!");
+    } else {
+      alert("Unsuccessful! Try again!");
     }
     window.location.reload(false);
   }
@@ -143,6 +159,19 @@ function Home() {
           </Form>
           </div>
           
+          <div style={{marginTop: "40px", marginLeft:"10px", width: "300px" }}>
+          <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label style={{fontWeight : "bold"}}>Change your name</Form.Label>
+          <Form.Control type="text" placeholder="Enter name" onChange={e => setNewUserName(e.target.value)}/>
+          <Form.Text className="text-muted">
+          </Form.Text>
+          </Form.Group>
+          <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callUpdateUser}>
+            Save changes
+          </button>
+          </Form>
+          </div>
         </div>
         <div class="col-8" style={{marginTop:"50px"}}>
           <PostForm groups={JSON.parse(localStorage.getItem("userData")).groups}/>
@@ -202,8 +231,29 @@ function Home() {
         }
       })
   }
-
+async function updateUser(username, newName) {
+  return fetch('http://localhost:8090/api/user/update', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( {username : username , newName : newName})
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log("Uspesno promenjeno ime!")
+        isUpdated1 = true;
+      }
+      else {
+        isUpdated1 = false;
+      }
+    })
 }
+}
+
+
 
 async function getPosts(username) {
   return fetch('http://localhost:8090/api/posts', {
