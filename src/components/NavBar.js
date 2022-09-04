@@ -5,10 +5,25 @@ import CreateUserForm from './CreateUserForm';
 
 function NavBar() {
     let navigate = useNavigate();
+    var isDeleted=false;
+
     const logout = async e =>{
         
         localStorage.clear();
         navigate("../login", { replace: true });
+    }
+
+    const calldeleteUser = async e =>{
+    e.preventDefault(); 
+    await deleteUser(JSON.parse(localStorage.getItem("username")));
+    if(isDeleted) {
+      alert("Your account is deactivated");
+      navigate("../login", { replace: true });
+
+    } else {
+      alert("neuspesno");
+    }
+        //localStorage.clear();
     }
 
     const createUser =  async e =>{
@@ -16,6 +31,24 @@ function NavBar() {
         navigate("../createuser", { replace: true });
         window.location.reload()
     }
+
+    async function deleteUser(username) {
+        return fetch('http://localhost:8090/api/user/delete/'+ username, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods':'POST,GET,DELETE,PATCH,OPTIONS'
+          },
+        })
+          .then(function(response) {
+            if(response.ok) {
+              isDeleted = true;
+            } else {
+              isDeleted = false;
+            }
+          })
+      }
   
     if(JSON.parse(localStorage.getItem("admin"))=="false"){
         
@@ -37,8 +70,12 @@ function NavBar() {
                 
             </button>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+            onClick={calldeleteUser}>
+               Delete account
+            </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
             onClick={logout}>
-                LOGOUT
+               LOGOUT
             </button>
             
         </nav>
@@ -83,5 +120,6 @@ function NavBar() {
 
      
 }
+
 
 export default NavBar;
