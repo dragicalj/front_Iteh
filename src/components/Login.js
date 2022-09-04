@@ -51,7 +51,11 @@ export default function Login({setToken}) {
     localStorage.setItem("username", JSON.stringify(username));
     console.log(username);
   }
-  
+  const createUser =  async e =>{
+    console.log("CreateUserFOrm");
+    navigate("../createuser", { replace: true });
+    window.location.reload()
+}
   return(
     
       <body style={{ margin : "230px 0px", textAlign : "center"}}>
@@ -68,6 +72,9 @@ export default function Login({setToken}) {
           </label>
           <div>
           <button style={{marginTop : "20px", width : "300px" }} type="submit" className="btn btn-primary mb-2" onClick={setUsername1(username)}>LOG IN</button>
+          </div>
+          <div>
+          <button style={{marginTop : "10px", width : "300px" }} type="submit" className="btn btn-primary mb-2" onClick={createUser}>Don't have an account? Register here</button>
           </div>
         </form>
       </div>
