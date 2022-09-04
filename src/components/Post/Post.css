@@ -508,12 +508,17 @@ blockquote {
     color: #36a0e7;
 }
 
-.comment-list .media .media-body ul li a.reply-btn {
+.comment-list .media .media-body ul li a.reply-
+ {
     color: #49545b;
     text-decoration: underline;
 }
 
 .comment-list .media .media-body ul li a.reply-btn:hover {
+    color: #36a0e7;
+}
+
+.delete-btn {
     color: #36a0e7;
 }
 
