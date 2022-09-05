@@ -7,10 +7,15 @@ function PostForm() {
     const [group, setGroup] = React.useState(null);
     const [title, setTitle] = React.useState();
     const [desc, setDesc] = React.useState();
+    const[newTitle, setNewTitle] = useState("");
+    const[newDescription, setNewDescription] = useState("");
+
     var isPosted = false;
     var firstLoad = true;
-    
+    var isUpdated1=false;
+
     var groups1 = JSON.parse(localStorage.getItem("groups"))
+    var post = JSON.parse(localStorage.getItem("postToEdit"));
 
     React.useEffect(() => {
       if(JSON.parse(localStorage.getItem("isEdit"))=="true"){
@@ -18,7 +23,6 @@ function PostForm() {
           console.log("POSTT NOVI");
           
           
-          var post = JSON.parse(localStorage.getItem("postToEdit"));
           console.log(post);
           setTitle(post.post.title);
           setDesc(post.post.description);
@@ -40,7 +44,39 @@ function PostForm() {
     const handleChangeDesc = (event) => {
       setDesc(event.target.value);
     };
-
+    const callEditPost = async e => {
+      e.preventDefault();
+      console.log(title);
+      console.log(desc+"aaa");
+      await updatePost(post.post.id, title, desc);
+      if(isUpdated1) {
+        alert("Post changed!");
+      } else {
+        alert("Unsuccessful! Try again!");
+      }
+      window.location.reload(false);
+    }
+    async function updatePost(postID, title1, desc1) {
+      return fetch('http://localhost:8090/api/post/update', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify( {postID : postID , title : title1, description: desc1})
+        })
+        .then(function(response) {
+          if(response.ok) {
+            console.log("Uspesno promenjen post!")
+            isUpdated1 = true;
+          }
+          else {
+            isUpdated1 = false;
+          }
+        })
+    }
+    
     const callSavePost = async e => {
       e.preventDefault();
       console.log(group);
@@ -119,7 +155,7 @@ function PostForm() {
               />   
           </div>
           <div style={{textAlign : "right", marginTop: "10px"}} className="form-group">
-            <button style={{width : "250px"}} type="submit" className="btn btn-primary mb-2" onClick={callSavePost}>POST</button>
+            <button style={{width : "250px"}} type="submit" className="btn btn-primary mb-2" onClick={callEditPost}>Save changes</button>
           </div>
         </form>
         </div>
