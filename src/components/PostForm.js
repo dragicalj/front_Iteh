@@ -1,6 +1,7 @@
 import React from 'react'
 import Combobox from "react-widgets/Combobox";
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 function PostForm() {
 
@@ -16,13 +17,11 @@ function PostForm() {
 
     var groups1 = JSON.parse(localStorage.getItem("groups"))
     var post = JSON.parse(localStorage.getItem("postToEdit"));
+    let navigate = useNavigate();
 
     React.useEffect(() => {
       if(JSON.parse(localStorage.getItem("isEdit"))=="true"){
         if(firstLoad){
-          console.log("POSTT NOVI");
-          
-          
           console.log(post);
           setTitle(post.post.title);
           setDesc(post.post.description);
@@ -44,6 +43,8 @@ function PostForm() {
     const handleChangeDesc = (event) => {
       setDesc(event.target.value);
     };
+
+
     const callEditPost = async e => {
       e.preventDefault();
       console.log(title);
@@ -54,28 +55,11 @@ function PostForm() {
       } else {
         alert("Unsuccessful! Try again!");
       }
+      localStorage.setItem("isEdit", JSON.stringify("false"));
+      navigate("../home", { replace: true });
       window.location.reload(false);
     }
-    async function updatePost(postID, title1, desc1) {
-      return fetch('http://localhost:8090/api/post/update', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify( {postID : postID , title : title1, description: desc1})
-        })
-        .then(function(response) {
-          if(response.ok) {
-            console.log("Uspesno promenjen post!")
-            isUpdated1 = true;
-          }
-          else {
-            isUpdated1 = false;
-          }
-        })
-    }
+
     
     const callSavePost = async e => {
       e.preventDefault();
@@ -144,7 +128,7 @@ function PostForm() {
           </div>
           </form>
           <form>
-          <div style={{textAlign : "left", marginTop: "10px"}} className="form-group">
+          {/* <div style={{textAlign : "left", marginTop: "10px"}} className="form-group">
             <label style={{marginRight : "10px"}} for="exampleFormControlFile1">Your groups: {group}</label> 
               <Combobox style={{width: "300px"}}
                 defaultValue="Select group"
@@ -153,7 +137,7 @@ function PostForm() {
                 value= {group}
                 onChange = {handleChangeGroup}
               />   
-          </div>
+          </div> */}
           <div style={{textAlign : "right", marginTop: "10px"}} className="form-group">
             <button style={{width : "250px"}} type="submit" className="btn btn-primary mb-2" onClick={callEditPost}>Save changes</button>
           </div>
@@ -179,6 +163,27 @@ function PostForm() {
               isPosted = true;
             } else {
               isPosted = false;
+            }
+          })
+      }
+
+      async function updatePost(postID, title1, desc1) {
+        return fetch('http://localhost:8090/api/post/update', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( {postID : postID , title : title1, description: desc1})
+          })
+          .then(function(response) {
+            if(response.ok) {
+              console.log("Uspesno promenjen post!")
+              isUpdated1 = true;
+            }
+            else {
+              isUpdated1 = false;
             }
           })
       }
