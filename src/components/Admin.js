@@ -11,11 +11,8 @@ import { useNavigate } from 'react-router';
 import ChartForAdmin from "./ChartForAdmin";
 import CreateUserForm from "./CreateUserForm";
 import { saveAs } from 'file-saver';
+import './Admin.css';
 
-
-  
-
-// Second simple component with heading tag
 function Admin() {
   const[isLoaded, setIsLoaded]=useState(false);
   const[groupName, setGroupName] = useState("");
@@ -37,9 +34,7 @@ function Admin() {
     //callGetGroupReport()
 }, []);
 
-
-
-  const callGetGroups = async e => {
+ const callGetGroups = async e => {
     var groups = await getGroups();
     localStorage.setItem("groups", JSON.stringify(groups));
     setIsLoaded(true);
@@ -55,14 +50,11 @@ function Admin() {
   }
 
   const callGetGroupReport = async e =>{
-  
-   
     var report = await getGroupReport(groupName);
     setGroupNamesForChart([...groupNamesForChart,groupName]);
     setUsersInGroup([...userInGroup,report.userCount]);
     console.log("Ovo je report grupe");
     console.log(report);
-   
   }
 
   const callDownloadGroupReport = async e =>{
@@ -76,16 +68,13 @@ function Admin() {
     element.href = URL.createObjectURL(file);
     element.download = "data.csv";
     document.body.appendChild(element);
-    element.click();
-   
+    element.click(); 
   }
 
 if(isLoaded){
   return (
-    
     <div style={{textAlign: "left", width:"100%"}}>
       <NavBar></NavBar>
-      
       <div class="row" >
         <div class="col-4" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
             <Form style={{marginLeft : "20px"}}>
@@ -101,9 +90,6 @@ if(isLoaded){
             Chagne group name
           </button>
             </Form>
-            <a style={{textAlign : "center", width : "300px", fontWeight : "bold" , fontSize : "20px", marginLeft:"10px", marginBottom : "10px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">MY GROUPS</a>
-            <GroupList>
-            </GroupList>
         </div>
         <div class = "col-8" style={{marginTop:"80px", width : "1000px", marginLeft : "200px"}}>
         <a style={{textAlign : "center", width : "600px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">GROUP TABLE</a>
@@ -114,13 +100,13 @@ if(isLoaded){
         <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
         <Form.Label style={{fontWeight : "bold"}}>Enter group name</Form.Label>
         <Form.Control type="text" placeholder="New group name" onChange={e => setGroupName(e.target.value)}/>
-        <button id = "input" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
-        <button id = "input" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callDownloadGroupReport}>Download report</button>
+        <div>
+        <button id = "addGroupButton" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callGetGroupReport}>Add group</button>
+        <button id = "downloadCSVButton" className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callDownloadGroupReport}>Download report</button>
+        </div>
         <ChartForAdmin data = {{groupNamesForChart, userInGroup}}></ChartForAdmin>
-      
       </div>
     </div>
-  
   );
 }else{
   return (
@@ -130,8 +116,6 @@ if(isLoaded){
   )
 }
 }
-
-
 
 async function getGroups() {
   return fetch('http://localhost:8090/api/admin/groups', {

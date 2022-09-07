@@ -16,6 +16,7 @@ export default function Login({setToken}) {
    
   const handleSubmit = async e => {
     e.preventDefault();
+    localStorage.setItem("username", JSON.stringify(username));
     const token = await loginUser({
       username,
       password
@@ -44,7 +45,8 @@ export default function Login({setToken}) {
       navigate("../admin", { replace: true });
       window.location.reload()
     }else{
-      navigate("../home", { replace: true });
+     navigate("../home", { replace: true });
+      
       window.location.reload()
     }
   }
@@ -63,7 +65,7 @@ export default function Login({setToken}) {
       <body style={{ margin : "230px 0px", textAlign : "center"}}>
       <div className="login-wrapper">
         {/* <h1 style={{marginBottom : "20px"}}>LOGIN FORM</h1> */}
-        <form onSubmit={handleSubmit}>
+        <form >
           <label>
             <p style={{fontWeight : "bold", fontSize : "20px"}}>Username</p>
             <input style={{marginRight : "10px" , fontSize : "20px"}} type="text" onChange={e => setUserName(e.target.value)} />
@@ -73,10 +75,10 @@ export default function Login({setToken}) {
             <input style={{marginLeft : "10px", fontSize : "20px"}} type="password" onChange={e => setPassword(e.target.value)} />
           </label>
           <div>
-          <button style={{marginTop : "20px", width : "300px" }} type="submit" className="btn btn-primary mb-2" onClick={setUsername1(username)}>LOG IN</button>
+          <button style={{marginTop : "20px", width : "300px" }} type="button" className="btn btn-primary mb-2" onClick={handleSubmit}>LOG IN</button>
           </div>
           <div>
-          <button style={{marginTop : "10px", width : "300px" }} type="submit" className="btn btn-primary mb-2" onClick={createUser}>Don't have an account? Register here</button>
+          <button style={{marginTop : "10px", width : "300px" }} type="button" className="btn btn-primary mb-2" onClick={createUser}>Don't have an account? Register here</button>
           </div>
         </form>
       </div>

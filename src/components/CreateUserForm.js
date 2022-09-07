@@ -13,7 +13,7 @@ function CreateUserForm() {
 
     var isRegistered=false;
 
-
+    console.log("RADISSSSSSS")
     const callRegisterUser = async e => {
         e.preventDefault();
         console.log("Name");
@@ -25,8 +25,7 @@ function CreateUserForm() {
         await registerUser(username, password, name);
         if(isRegistered) {
           alert("User registered successfully")
-          navigate("../login", { replace: true });
-        window.location.reload()
+         
         } else {
           alert("User already exists! Try again")
           
