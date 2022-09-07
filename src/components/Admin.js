@@ -1,17 +1,13 @@
 
 import React from "react";
-import Post from './Post/Post';
 import { useState } from 'react';
-import GroupList from './GroupList';
-import PostForm from './PostForm';
 import NavBar from './NavBar';
 import BasicTable from './BasicTable'
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from 'react-router';
 import ChartForAdmin from "./ChartForAdmin";
-import CreateUserForm from "./CreateUserForm";
-import { saveAs } from 'file-saver';
 import './Admin.css';
+import ModalDialog from "./ModalDialog";
 
 function Admin() {
   const[isLoaded, setIsLoaded]=useState(false);
@@ -19,6 +15,7 @@ function Admin() {
   const[newGroupName, setNewGroupName] = useState("");
   const[groupNamesForChart, setGroupNamesForChart] = useState([]);
   const[userInGroup, setUsersInGroup] = useState([]);
+  const [isShow, invokeModal] = React.useState(true)
 
   let navigate = useNavigate();
   React.useEffect(() => {
@@ -40,13 +37,6 @@ function Admin() {
     setIsLoaded(true);
     console.log("OVO SU GRUPE ADMIN")
     console.log(groups)
-  }
-
-  const callChaneGroupName = async e => {
-    e.preventDefault(); 
-    var groups = await changeGroupName(groupName, newGroupName);
-    alert("Group '" + groupName + "'changed!");
-    window.location.reload(false);
   }
 
   const callGetGroupReport = async e =>{
@@ -75,26 +65,8 @@ if(isLoaded){
   return (
     <div style={{textAlign: "left", width:"100%"}}>
       <NavBar></NavBar>
-      <div class="row" >
-        <div class="col-4" style={{marginTop:"80px", width : "300px", marginLeft : "10px"}}>
-            <Form style={{marginLeft : "20px"}}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label style={{fontWeight : "bold"}}>Enter group name</Form.Label>
-            <Form.Control type="text" placeholder="Old group name" onChange={e => setGroupName(e.target.value)}/>
-            <Form.Label style={{fontWeight : "bold"}}>Enter new group name</Form.Label>
-            <Form.Control type="text" placeholder="New group name" onChange={e => setNewGroupName(e.target.value)}/>
-            <Form.Text className="text-muted">
-            </Form.Text>
-            </Form.Group>
-            <button className="btn btn-primary" style={{width : "300px"}} type="submit" onClick={callChaneGroupName}>
-            Chagne group name
-          </button>
-            </Form>
-        </div>
-        <div class = "col-8" style={{marginTop:"80px", width : "1000px", marginLeft : "200px"}}>
-        <a style={{textAlign : "center", width : "600px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">GROUP TABLE</a>
-            <BasicTable></BasicTable>
-        </div>
+      <div className="container mt-3">
+      <ModalDialog />
       </div>
       <div class="row" style={{width : "80%", textAlign : "center" , marginLeft : "100px" , marginTop : "100px"}}>
         <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
