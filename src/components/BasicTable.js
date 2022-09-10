@@ -1,8 +1,7 @@
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
 
 function BasicExample() {
-
-   let groups = JSON.parse(localStorage.getItem("groups"));
+  let groups = JSON.parse(localStorage.getItem("groups"));
 
   return (
     <Table striped bordered hover>
@@ -13,12 +12,12 @@ function BasicExample() {
         </tr>
       </thead>
       <tbody>
-      {groups.map((g) => (
-         <tr>
-          <td>{g.groupID}</td>
-          <td>{g.name}</td>
-        </tr>
-      ))}
+        {groups.map((g) => (
+          <tr>
+            <td>{g.groupID}</td>
+            <td>{g.name}</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );
