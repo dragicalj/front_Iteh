@@ -3,20 +3,23 @@ import { Modal, Button } from 'react-bootstrap'
 import { Form} from "react-bootstrap";
 import { useState } from 'react';
 
+
+
 function ModalDialog(props) {
   const[groupName, setGroupName] = useState("");
   const[newGroupName, setNewGroupName] = useState("");
   const initModal = () => {
     props.onClick();
   }
+ 
   const callChangeGroupName = async e => {
     e.preventDefault(); 
     var groups = await changeGroupName(groupName, newGroupName);
-    alert("Group '" + groupName + "'changed!");
-    window.location.reload(false);
+    // alert("Group '" + groupName + "'changed!");
+    // window.location.reload(false);
   }
   return (
-    <>
+    <> 
       <Modal show={props.isShow}>
         <Modal.Header closeButton onClick={initModal}>
           <Modal.Title>Change group name</Modal.Title>
@@ -56,6 +59,19 @@ async function changeGroupName(toUpdateG, newNameG) {
         },
         body: JSON.stringify( {toUpdate : toUpdateG, newName: newNameG})
       })
-        .then(data => data.json())
+      .then(function(response) {
+        if(response.ok) {
+          console.log("Uspesno promenjeno ime!");
+          alert("Group name changed successfuly");
+         
+        }
+        else {
+            console.log("Neuspesno promenjeno ime!")
+            response.json().then(json => {
+                console.log(json.message);
+                alert(json.message);
+            });        
+        }
+      })
   }
 export default ModalDialog
