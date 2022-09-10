@@ -3,12 +3,11 @@ import { Modal, Button } from 'react-bootstrap'
 import { Form} from "react-bootstrap";
 import { useState } from 'react';
 
-function ModalDialog() {
-  const [isShow, invokeModal] = React.useState(false)
+function ModalDialog(props) {
   const[groupName, setGroupName] = useState("");
   const[newGroupName, setNewGroupName] = useState("");
   const initModal = () => {
-    return invokeModal(!isShow)
+    props.onClick();
   }
   const callChangeGroupName = async e => {
     e.preventDefault(); 
@@ -18,10 +17,7 @@ function ModalDialog() {
   }
   return (
     <>
-      <Button variant="success" onClick={initModal}>
-        Open Modal
-      </Button>
-      <Modal show={isShow}>
+      <Modal show={props.isShow}>
         <Modal.Header closeButton onClick={initModal}>
           <Modal.Title>Change group name</Modal.Title>
         </Modal.Header>

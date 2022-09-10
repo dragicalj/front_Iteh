@@ -1,4 +1,5 @@
 import React from 'react';
+import { ModalDialog } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import CreateUserForm from './CreateUserForm';
 
@@ -6,11 +7,16 @@ import CreateUserForm from './CreateUserForm';
 function NavBar() {
     let navigate = useNavigate();
     var isDeleted=false;
-
-    const logout = async e =>{
-        
+    var isShow = true;
+    
+    const logout = async e =>{    
         localStorage.clear();
         navigate("../login", { replace: true });
+    }
+    const changeModalState = async e =>{
+        //invokeModal(!isShow);
+        //console.log("Menja stanje");
+        //console.log(isShow);
     }
 
     const calldeleteUser = async e =>{
@@ -19,7 +25,6 @@ function NavBar() {
     if(isDeleted) {
       alert("Your account is deactivated");
       navigate("../login", { replace: true });
-
     } else {
       alert("neuspesno");
     }
@@ -53,21 +58,17 @@ function NavBar() {
     if(JSON.parse(localStorage.getItem("admin"))=="false"){
         
     return (
-   
-    <div class="pos-f-t">
-        <div class="collapse" id="navbarToggleExternalContent">
-            <div class="bg-dark p-4">
-            <h4 class="text-white">Collapsed content</h4>
-            <span class="text-muted">Toggleable via the navbar brand.</span>
+        <div class="pos-f-t">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                <h4 class="text-white">Collapsed content</h4>
+                <span class="text-muted">Toggleable via the navbar brand.</span>
+            </div>
         </div>
-    </div>
-   
         <nav class="navbar navbar-dark bg-primary">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">   
             </button>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">  
             </button>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
             onClick={calldeleteUser}>
@@ -79,13 +80,11 @@ function NavBar() {
             </button>
             
         </nav>
-    </div>
-        
+    </div>    
     )
     }
     else{
         return (
-   
             <div class="pos-f-t">
                 <div class="collapse" id="navbarToggleExternalContent">
                     <div class="bg-dark p-4">
@@ -93,25 +92,23 @@ function NavBar() {
                     <span class="text-muted">Toggleable via the navbar brand.</span>
                 </div>
             </div>
-           
                 <nav class="navbar navbar-dark bg-primary">
+                    <ModalDialog></ModalDialog>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
-                onClick={createUser}>
-                       
-                    </button>
+                onClick={createUser}>     
+                </button>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        
-                    </button>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                       
-                    </button>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                       
-                    </button>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
-                    onClick={logout}>
+                </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+                 onClick={changeModalState}>
+                       Change group name
+                </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+                onClick={logout}>
                         LOGOUT
-                    </button>
+                </button>
                     
                 </nav>
             </div>

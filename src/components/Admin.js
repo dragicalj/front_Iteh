@@ -15,7 +15,7 @@ function Admin() {
   const[newGroupName, setNewGroupName] = useState("");
   const[groupNamesForChart, setGroupNamesForChart] = useState([]);
   const[userInGroup, setUsersInGroup] = useState([]);
-  const [isShow, invokeModal] = React.useState(true)
+  const [isShow, setIsShow] = React.useState(false)
 
   let navigate = useNavigate();
   React.useEffect(() => {
@@ -60,13 +60,55 @@ function Admin() {
     document.body.appendChild(element);
     element.click(); 
   }
+  const logout = async e =>{    
+    localStorage.clear();
+    navigate("../login", { replace: true });
+  }
+  const changeModalState = async e =>{
+    setIsShow(!isShow);
+  }
 
 if(isLoaded){
   return (
+
+    
+
+
+    
     <div style={{textAlign: "left", width:"100%"}}>
-      <NavBar></NavBar>
+       <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-dark p-4">
+                    <h4 class="text-white">Collapsed content</h4>
+                    <span class="text-muted">Toggleable via the navbar brand.</span>
+                </div>
+            </div>
+                <nav class="navbar navbar-dark bg-primary">
+                  {isShow && <ModalDialog isShow = {isShow} onClick = {changeModalState}></ModalDialog>}  
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                       
+                    </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        
+                    </button>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                       
+                    </button>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+                    onClick={changeModalState}>
+                       Change group name
+                    </button>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+                    onClick={logout}>
+                        LOGOUT
+                    </button>
+                    
+                </nav>
+            </div>
+      
       <div className="container mt-3">
-      <ModalDialog />
+       
+      
       </div>
       <div class="row" style={{width : "80%", textAlign : "center" , marginLeft : "100px" , marginTop : "100px"}}>
         <a style={{textAlign : "center", width : "900px", fontWeight : "bold" , fontSize : "20px", marginLeft:"200px", marginBottom : "30px"}} class="list-group-item" id="list-home-list" data-toggle="list" role="tab" aria-controls="home">CHART</a>
