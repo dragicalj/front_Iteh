@@ -1,24 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import NavBar from "./NavBar";
-import BasicTable from "./BasicTable";
 import {
   Form,
-  Button,
-  FormGroup,
-  FormControl,
-  ControlLabel,
+  Button
 } from "react-bootstrap";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useNavigate } from "react-router";
 import ChartForAdmin from "./ChartForAdmin";
 import "./Admin.css";
-import ModalDialog from "./ModalDialog";
 import logo from "../components/assets/logo.gif";
 
 function Admin() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [groupName, setGroupName] = useState("");
-  const [newGroupName, setNewGroupName] = useState("");
   const [groupNamesForChart, setGroupNamesForChart] = useState([]);
   const [userInGroup, setUsersInGroup] = useState([]);
   const [isShow, setIsShow] = React.useState(false);
@@ -66,17 +60,13 @@ function Admin() {
     document.body.appendChild(element);
     element.click();
   };
-  const logout = async (e) => {
-    localStorage.clear();
-    navigate("../login", { replace: true });
-  };
-  const changeModalState = async (e) => {
-    setIsShow(!isShow);
-  };
 
   if (isLoaded) {
     return (
+      
+     
       <div style={{ textAlign: "left", width: "100%" }}>
+         <ResponsiveAppBar></ResponsiveAppBar>
         <div class="pos-f-t">
           <div class="collapse" id="navbarToggleExternalContent">
             <div class="bg-dark p-4">
@@ -84,65 +74,6 @@ function Admin() {
               <span class="text-muted">Toggleable via the navbar brand.</span>
             </div>
           </div>
-          <nav class="navbar navbar-dark bg-primary">
-            {isShow && (
-              <ModalDialog
-                isShow={isShow}
-                onClick={changeModalState}
-              ></ModalDialog>
-            )}
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            ></button>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            ></button>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            ></button>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              onClick={changeModalState}
-            >
-              Change group name
-            </button>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              onClick={logout}
-            >
-              LOGOUT
-            </button>
-          </nav>
         </div>
         <div className="container mt-3"></div>
         <div
@@ -154,6 +85,9 @@ function Admin() {
             marginTop: "100px",
           }}
         >
+          <Button variant="text">Text</Button>
+<Button variant="contained">Contained</Button>
+<Button variant="outlined">Outlined</Button>
           <Form.Label style={{ fontWeight: "bold" }}>
             Enter group name
           </Form.Label>
@@ -187,6 +121,7 @@ function Admin() {
           ></ChartForAdmin>
         </div>
       </div>
+      
     );
   } else {
     return (
