@@ -4,10 +4,10 @@ import { useState } from "react";
 import GroupList from "./GroupList";
 import PostForm from "./PostForm";
 import NavBar from "./NavBar";
-import Login from "./Login";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router";
 import logo from "../components/assets/logo.gif";
+import HomeNavBar from "../components/HomeNavBar";
 
 function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -109,7 +109,9 @@ function Home() {
 
   if (isLoaded && isLoaded2) {
     return (
+     
       <div style={{ textAlign: "left", width: "100%" }}>
+         <HomeNavBar></HomeNavBar>
         <NavBar></NavBar>
         <div class="row">
           <div

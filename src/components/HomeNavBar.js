@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import ModalDialog from "./ChangeGroupNameDialog";
+import ModalDialog from "./GroupDialog";
 import { useNavigate } from "react-router";
 
 const pages = ['NESTO', 'Pricing', 'Blog'];
@@ -22,6 +22,7 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isShow, setIsShow] = React.useState(false);
   let navigate = useNavigate();
+  let groupDialogName = "groupDialogName";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -154,7 +155,13 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseNavMenu}
             >
             <MenuItem key="Group menu item" onClick={changeModalState}>
-            <Typography textAlign="center">Change group name</Typography>
+            <Typography textAlign="center">Create</Typography>
+          </MenuItem>
+          <MenuItem key="Group menu item" onClick={changeModalState}>
+            <Typography textAlign="center">Join</Typography>
+          </MenuItem>
+          <MenuItem key="Group menu item" onClick={changeModalState}>
+            <Typography textAlign="center">Delete</Typography>
           </MenuItem>
             </Menu>
           </Box>
@@ -196,6 +203,8 @@ const ResponsiveAppBar = () => {
       {isShow && (
               <ModalDialog
                 isShow={isShow}
+                title = {groupDialogName}
+                create = {true}
                 onClick={changeModalState}
               ></ModalDialog>
             )}
