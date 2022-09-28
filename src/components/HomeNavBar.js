@@ -200,11 +200,19 @@ const ResponsiveAppBar = () => {
           </Box>
         </Toolbar>
       </Container>
-      {isShow && (
+      {/* {isShow && (
               <ModalDialog
                 isShow={isShow}
                 title = {groupDialogName}
-                create = {true}
+                create = {false}
+                onClick={changeModalState}
+              ></ModalDialog>
+            )} */}
+       {isShow && (
+              <ModalDialog
+                isShow={isShow}
+                title = {groupDialogName}
+                join = {true}
                 onClick={changeModalState}
               ></ModalDialog>
             )}

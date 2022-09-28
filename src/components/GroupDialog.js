@@ -9,6 +9,7 @@ function ModalDialog(props) {
   const initModal = () => {
     props.onClick();
   };
+
   const callCreateGroup = async (e) => {
     e.preventDefault();
     const groupInformations = await createGroup(groupName, JSON.parse(localStorage.getItem("username")));
@@ -16,8 +17,12 @@ function ModalDialog(props) {
       "groupInformations",
       JSON.stringify(groupInformations)
     );
-    alert("Group '" + groupName + "'created!");
-    window.location.reload(false);
+  };
+
+  const callJoinGroup = async (e) => {
+    e.preventDefault();
+    await joinGroup(
+      JSON.parse(localStorage.getItem("username")), groupName);
   };
   return (
     <>
@@ -49,35 +54,19 @@ function ModalDialog(props) {
               Save
             </Button>
             )}
-
-         
+         {props.join && (
+              <Button variant="dark" onClick={callJoinGroup}>
+              Join
+            </Button>
+            )}         
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-async function changeGroupName(toUpdateG, newNameG) {
-  return fetch("http://localhost:8090/api/admin/group/update", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ toUpdate: toUpdateG, newName: newNameG }),
-  }).then(function (response) {
-    if (response.ok) {
-      console.log("Uspesno promenjeno ime!");
-      alert("Group name changed successfuly");
-    } else {
-      console.log("Neuspesno promenjeno ime!");
-      response.json().then((json) => {
-        console.log(json.message);
-        alert(json.message);
-      });
-    }
-  });
+function reload(){
+    window.location.reload(false);
 }
 
 async function createGroup(groupname, username) {
@@ -93,6 +82,31 @@ async function createGroup(groupname, username) {
         if (response.ok) {
           console.log("Uspesno kreirana grupa!");
           alert("Group created successfuly");
+          reload();
+        } else {
+          console.log("Neuspesno kreirana grupa");
+          response.json().then((json) => {
+            console.log(json.message);
+            alert(json.message);
+          });
+        }
+      });
+  }
+
+  async function joinGroup(username, groupname) {
+    return fetch("http://localhost:8090/api/group/add", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username, groupname: groupname }),
+    }).then(function (response) {
+        if (response.ok) {
+          console.log("Ucelanjen u grupu!");
+          alert("Group joined");
+          reload();
         } else {
           console.log("Neuspesno kreirana grupa");
           response.json().then((json) => {
