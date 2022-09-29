@@ -24,6 +24,12 @@ function ModalDialog(props) {
     await joinGroup(
       JSON.parse(localStorage.getItem("username")), groupName);
   };
+
+  const callDeleteGroup = async (e) => {
+    e.preventDefault();
+    await deleteGroup(groupName, JSON.parse(localStorage.getItem("username"))
+    );
+  };
   return (
     <>
       <Modal show={props.isShow}>
@@ -58,7 +64,12 @@ function ModalDialog(props) {
               <Button variant="dark" onClick={callJoinGroup}>
               Join
             </Button>
-            )}         
+            )}  
+        {props.delete && (
+              <Button variant="dark" onClick={callDeleteGroup}>
+              Delete
+            </Button>
+            )}        
         </Modal.Footer>
       </Modal>
     </>
@@ -104,11 +115,37 @@ async function createGroup(groupname, username) {
       body: JSON.stringify({ username: username, groupname: groupname }),
     }).then(function (response) {
         if (response.ok) {
-          console.log("Ucelanjen u grupu!");
+          console.log("Uclanjen u grupu!");
           alert("Group joined");
           reload();
         } else {
           console.log("Neuspesno kreirana grupa");
+          response.json().then((json) => {
+            console.log(json.message);
+            alert(json.message);
+          });
+        }
+      });
+  }
+
+  async function deleteGroup(groupname, username) {
+    return fetch(
+      "http://localhost:8090/api/group/" + groupname + "/" + username,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST,GET,DELETE,PATCH,OPTIONS",
+        },
+      }
+    ).then(function (response) {
+        if (response.ok) {
+          console.log("Obrisana grupa");
+          alert("Group deleted");
+          reload();
+        } else {
+          console.log("Neuspesno obrisana grupa");
           response.json().then((json) => {
             console.log(json.message);
             alert(json.message);
