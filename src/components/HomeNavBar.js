@@ -21,8 +21,12 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isShow, setIsShow] = React.useState(false);
+  const [isCreate, setIsCreate] = React.useState(false);
+  const [isJoin, setIsJoin] = React.useState(false);
+  const [isDelete, setIsDelete] = React.useState(false);
+  const [groupDialogName, setGroupDialogName] = React.useState("defaultTitle");
+
   let navigate = useNavigate();
-  let groupDialogName = "groupDialogName";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,6 +45,22 @@ const ResponsiveAppBar = () => {
   const changeModalState = async (e) => {
     handleCloseNavMenu();
     setIsShow(!isShow);
+
+  };
+  const changeCreateState = async (e) => {
+    setGroupDialogName("Save new group");
+    handleCloseNavMenu();
+    setIsCreate(!isCreate);
+  };
+  const changeJoinState = async (e) => {
+    handleCloseNavMenu();
+    setIsJoin(!isJoin);
+    setGroupDialogName("Join group");
+  };
+  const changeDeleteState = async (e) => {
+    handleCloseNavMenu();
+    setIsDelete(!isDelete);
+    setGroupDialogName("Delete group");
   };
   const logout = async (e) => {
     handleCloseUserMenu();
@@ -154,13 +174,13 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
             >
-            <MenuItem key="Group menu item" onClick={changeModalState}>
-            <Typography textAlign="center">Create</Typography>
+            <MenuItem key="Group menu item" onClick={changeCreateState}>
+            <Typography textAlign="center">Save</Typography>
           </MenuItem>
-          <MenuItem key="Group menu item" onClick={changeModalState}>
+          <MenuItem key="Group menu item" onClick={changeJoinState}>
             <Typography textAlign="center">Join</Typography>
           </MenuItem>
-          <MenuItem key="Group menu item" onClick={changeModalState}>
+          <MenuItem key="Group menu item" onClick={changeDeleteState}>
             <Typography textAlign="center">Delete</Typography>
           </MenuItem>
             </Menu>
@@ -200,28 +220,28 @@ const ResponsiveAppBar = () => {
           </Box>
         </Toolbar>
       </Container>
-      {/* {isShow && (
+      {isCreate && (
               <ModalDialog
-                isShow={isShow}
+                isShow={isCreate}
                 title = {groupDialogName}
-                create = {false}
-                onClick={changeModalState}
+                create = {true}
+                onClick={changeCreateState}
               ></ModalDialog>
-            )} */}
-       {/* {isShow && (
+            )}
+       {isJoin && (
               <ModalDialog
-                isShow={isShow}
+                isShow={isJoin}
                 title = {groupDialogName}
                 join = {true}
-                onClick={changeModalState}
+                onClick={changeJoinState}
               ></ModalDialog>
-            )} */}
-             {isShow && (
+            )}
+      {isDelete && (
               <ModalDialog
-                isShow={isShow}
+                isShow={isDelete}
                 title = {groupDialogName}
                 delete = {true}
-                onClick={changeModalState}
+                onClick={changeDeleteState}
               ></ModalDialog>
             )}
     </AppBar>
