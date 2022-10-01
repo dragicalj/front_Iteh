@@ -9,13 +9,16 @@ import { useNavigate } from "react-router";
 import ChartForAdmin from "./ChartForAdmin";
 import "./Admin.css";
 import logo from "../components/assets/logo.gif";
+import TotalUsers from "./total-users";
+import { Sales } from "./sales";
 
 function Admin() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [groupNamesForChart, setGroupNamesForChart] = useState([]);
   const [userInGroup, setUsersInGroup] = useState([]);
-  const [isShow, setIsShow] = React.useState(false);
+  const [userCount, setUserCount] = useState(0);
+  const [increase, setIncrease] = useState(0);
 
   let navigate = useNavigate();
   React.useEffect(() => {
@@ -28,6 +31,7 @@ function Admin() {
       navigate("../login", { replace: true });
     }
     callGetGroups();
+    callGetUserCount();
     //callGetGroupReport()
   }, []);
 
@@ -60,6 +64,12 @@ function Admin() {
     document.body.appendChild(element);
     element.click();
   };
+  const callGetUserCount = async (e) => {
+    var userCount = await getUserCount();
+    setUserCount(userCount.count);
+    setIncrease(userCount.increase)
+  };
+  
 
   if (isLoaded) {
     return (
@@ -85,9 +95,8 @@ function Admin() {
             marginTop: "100px",
           }}
         >
-          <Button variant="text">Text</Button>
-<Button variant="contained">Contained</Button>
-<Button variant="outlined">Outlined</Button>
+          <TotalUsers userCount = {userCount} increase = {increase} ></TotalUsers>
+          <Sales></Sales>
           <Form.Label style={{ fontWeight: "bold" }}>
             Enter group name
           </Form.Label>
@@ -185,6 +194,17 @@ async function getCSVDataForReport(groupNamesForCSV) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(groupNamesForCSV),
+  }).then((data) => data.json());
+}
+
+async function getUserCount() {
+  return fetch("http://localhost:8090/api/admin/users/count", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST,GET,PATCH,OPTIONS",
+    },
   }).then((data) => data.json());
 }
 
